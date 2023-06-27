@@ -87,14 +87,14 @@ const Login = ({ onLogin, onClose }: any) => {
         <div className="flex flex-col sm:flex-row items-center justify-between">
           <button
             type="submit"
-            className="w-full sm:w-auto bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4 sm:mb-0"
+            className="w-full sm:w-auto bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline mb-4 sm:mb-0"
           >
             🔓 Login
           </button>
           <button
             type="button"
             onClick={handleClose}
-            className="w-full sm:w-auto bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="w-full sm:w-auto bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline"
           >
             ❌ Close
           </button>
