@@ -11,7 +11,7 @@ const Login = ({ onLogin, onClose }: any) => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
-    if (username.trim() === "" || password.trim() === "") {
+    if (!username.trim() || !password.trim()) {
       toast.warn("Access Alert! Credentials Required!🔐🚀", {
         position: "top-center",
         autoClose: 3000,
@@ -23,6 +23,7 @@ const Login = ({ onLogin, onClose }: any) => {
       });
       return;
     }
+
     const isLoggedIn = true;
 
     if (isLoggedIn) {
@@ -51,7 +52,7 @@ const Login = ({ onLogin, onClose }: any) => {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <form onSubmit={handleSubmit} className="max-w-sm w-full ">
+      <form onSubmit={handleSubmit} className="max-w-sm w-full">
         <div className="mb-4">
           <label
             htmlFor="username"
@@ -84,10 +85,10 @@ const Login = ({ onLogin, onClose }: any) => {
             placeholder="Password"
           />
         </div>
-        <div className="flex flex-col sm:flex-row items-center justify-between">
+        <div className="flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0 sm:space-x-4">
           <button
             type="submit"
-            className="w-full sm:w-auto bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline mb-4 sm:mb-0"
+            className="w-full sm:w-auto bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline"
           >
             🔓 Login
           </button>
