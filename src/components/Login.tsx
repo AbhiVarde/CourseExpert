@@ -51,7 +51,7 @@ const Login = ({ onLogin, onClose }: any) => {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <form onSubmit={handleSubmit} className="w-60">
+      <form onSubmit={handleSubmit} className="max-w-sm w-full ">
         <div className="mb-4">
           <label
             htmlFor="username"
@@ -84,17 +84,17 @@ const Login = ({ onLogin, onClose }: any) => {
             placeholder="Password"
           />
         </div>
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row items-center justify-between">
           <button
             type="submit"
-            className="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="w-full sm:w-auto bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4 sm:mb-0"
           >
             🔓 Login
           </button>
           <button
             type="button"
             onClick={handleClose}
-            className="w-full bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4 sm:mt-0 sm:ml-4"
+            className="w-full sm:w-auto bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
             ❌ Close
           </button>
