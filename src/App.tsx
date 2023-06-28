@@ -2,20 +2,25 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { selectCourses } from "./features/CoursesSlice";
 import { Routes, Route, useNavigate, Link } from "react-router-dom";
-import AddCourse from "./components/AddCourse";
-import Course from "./components/Course";
-import CourseList from "./components/CourseList";
+import AddCourse from "./Pages/AddCourse";
+import Course from "./Pages/Course";
+import CourseList from "./Pages/CourseList";
+import Cart from "./Pages/Cart";
 import { PiChalkboardTeacherFill } from "react-icons/pi";
 import { AiTwotoneHeart } from "react-icons/ai";
+import { FiShoppingCart } from "react-icons/fi";
 import Login from "./components/Login";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
+  const [purchasedCourses, setPurchasedCourses] = useState([]);
+
   const courses = useSelector(selectCourses);
   const navigate = useNavigate();
-  const [showLoginModal, setShowLoginModal] = useState(false);
 
   useEffect(() => {
     const storedLoggedIn = localStorage.getItem("loggedIn");
@@ -23,6 +28,10 @@ function App() {
       setLoggedIn(true);
     }
   }, []);
+
+  const addToCart = () => {
+    setCartCount((prevCount) => prevCount + 1);
+  };
 
   const handleLogin = () => {
     setLoggedIn(true);
@@ -34,7 +43,7 @@ function App() {
     setLoggedIn(false);
     localStorage.removeItem("loggedIn");
     localStorage.removeItem("username");
-    toast.success("🔒Account Locked! Until your return!📚", {
+    toast.success("🔒 Account Locked! Until your return! 📚", {
       position: "top-center",
       autoClose: 3000,
       hideProgressBar: true,
@@ -75,21 +84,45 @@ function App() {
         {loggedIn ? (
           <>
             <div className="max-w-4xl my-8 sm:my-10 mx-auto flex flex-col sm:flex-row justify-between items-center">
-              <h1 className="text-2xl sm:text-4xl tracking-tighter underline underline-blue mb-4 sm:mb-0 sm:mr-4 text-center">
+              <h1 className="text-2xl sm:text-4xl tracking-tighter underline underline-blue mb-4 sm:mb-0 text-center">
                 A Place to sell your Courses online!
               </h1>
-              <Link
-                to="/addcourse"
-                className="no-underline bg-gray-800 hover:bg-gray-900 py-2 sm:py-3 px-6 text-white font-bold flex items-center justify-center"
-              >
-                Sell a Course
-              </Link>
+              <div className="flex items-center">
+                <Link to="/cart" className="relative mr-5">
+                  <FiShoppingCart className="text-2xl sm:text-4xl" />
+                  {cartCount > 0 && (
+                    <sup className="text-white font-bold text-xs bg-gray-800 rounded-full p-1 absolute -top-2 -right-2">
+                      {cartCount}
+                    </sup>
+                  )}
+                </Link>
+
+                <Link
+                  to="/addcourse"
+                  className="no-underline bg-gray-800 hover:bg-gray-900 py-2 sm:py-3 px-6 text-white font-bold flex items-center justify-center"
+                >
+                  Sell a Course
+                </Link>
+              </div>
             </div>
 
             <Routes>
               <Route path="/" element={<CourseList courses={courses} />} />
-              <Route path="/:id" element={<Course />} />
-              <Route path="addcourse" element={<AddCourse />} />
+              <Route
+                path="/:id"
+                element={<Course onButtonClicked={addToCart} />}
+              />
+              <Route path="/addcourse" element={<AddCourse />} />
+              <Route
+                path="/cart"
+                element={
+                  <Cart
+                    courses={purchasedCourses}
+                    setPurchasedCourses={setPurchasedCourses}
+                    setCartCount={setCartCount}
+                  />
+                }
+              />
             </Routes>
           </>
         ) : (

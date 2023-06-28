@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import CourseCard from "./CourseCard";
+import CourseCard from "../components/CourseCard";
 
 const CourseList = ({ courses }: any) => {
   return (
@@ -9,7 +9,14 @@ const CourseList = ({ courses }: any) => {
           <Link
             to={`/${course.id}`}
             key={course.id}
-            className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition duration-300 ease-in-out flex flex-col"
+            className={`bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition duration-300 ease-in-out flex flex-col ${
+              course.isPurchased ? "opacity-60 cursor-not-allowed" : ""
+            }`}
+            onClick={(event) => {
+              if (course.isPurchased) {
+                event.preventDefault();
+              }
+            }}
           >
             <CourseCard data={course} />
           </Link>

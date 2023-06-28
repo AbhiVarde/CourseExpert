@@ -8,10 +8,12 @@ interface Course {
   price: number;
   by: string;
   rating: number;
+  isPurchased?: boolean;
 }
 
 interface CoursesState {
   courses: Course[];
+  cart: string[]; // Array of course IDs in the cart
 }
 
 const initialState: CoursesState = {
@@ -33,6 +35,7 @@ const initialState: CoursesState = {
       rating: 3,
     },
   ],
+  cart: [],
 };
 
 export const coursesSlice = createSlice({
@@ -42,12 +45,49 @@ export const coursesSlice = createSlice({
     setCourses: (state, action: PayloadAction<Course>) => {
       state.courses.push(action.payload);
     },
+    purchaseCourse: (state, action: PayloadAction<string>) => {
+      const courseId = action.payload;
+      state.courses = state.courses.map((course) =>
+        course.id === courseId ? { ...course, isPurchased: true } : course
+      );
+    },
+    addToCart: (state, action: PayloadAction<string>) => {
+      const courseId = action.payload;
+      state.cart.push(courseId);
+    },
+    removeFromCart: (state, action: PayloadAction<string>) => {
+      const courseId = action.payload;
+      state.cart = state.cart.filter((itemId) => itemId !== courseId);
+    },
+    updateCourse: (
+      state,
+      action: PayloadAction<{ id: string; changes: Partial<Course> }>
+    ) => {
+      const { id, changes } = action.payload;
+      const course = state.courses.find((course) => course.id === id);
+      if (course) {
+        Object.assign(course, changes);
+      }
+    },
   },
 });
 
-export const { setCourses } = coursesSlice.actions;
+export const {
+  setCourses,
+  purchaseCourse,
+  addToCart,
+  removeFromCart,
+  updateCourse,
+} = coursesSlice.actions;
 
 export const selectCourses = (state: { courses: CoursesState }) =>
   state.courses.courses;
+
+export const selectCartItems = (state: { courses: CoursesState }) =>
+  state.courses.cart;
+
+export const selectCourseById =
+  (courseId: string) => (state: { courses: CoursesState }) =>
+    state.courses.courses.find((course) => course.id === courseId);
 
 export default coursesSlice.reducer;

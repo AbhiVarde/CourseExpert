@@ -1,21 +1,28 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { selectCourses } from "../features/CoursesSlice";
+import { selectCourses, updateCourse } from "../features/CoursesSlice";
 import confetti from "canvas-confetti";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const Course = () => {
+const Course = ({ onButtonClicked }: any) => {
   const { id } = useParams();
   const courses = useSelector(selectCourses);
-  const [isClicked, setIsClicked] = useState(false);
+  const dispatch = useDispatch();
+
   const [isCelebrating, setIsCelebrating] = useState(false);
 
-  const handleButtonClick = () => {
-    if (!isClicked) {
-      setIsClicked(true);
+  const selectedCourse = courses.find((course) => course.id === id);
 
+  if (!selectedCourse) {
+    return null;
+  }
+
+  const isPurchased = selectedCourse.isPurchased;
+
+  const handleButtonClick = () => {
+    if (!isPurchased) {
       toast.success("Course bought! Start learning now! 🌟🎉 ", {
         position: "top-center",
         autoClose: 2000,
@@ -37,6 +44,15 @@ const Course = () => {
           setIsCelebrating(false);
         }, 3000);
       }
+
+      if (onButtonClicked) {
+        onButtonClicked();
+      }
+
+      // Update the course's isPurchased value in the Redux store
+      dispatch(
+        updateCourse({ id: selectedCourse.id, changes: { isPurchased: true } })
+      );
     } else {
       toast.info("Course already purchased! Happy learning! 🌟📚", {
         position: "top-center",
@@ -50,17 +66,11 @@ const Course = () => {
     }
   };
 
-  const selectedCourse = courses.find((course) => course.id === id);
-
-  if (!selectedCourse) {
-    return null;
-  }
-
   return (
     <div className="container p-4 max-w-xl bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition duration-300 ease-in-out mx-auto px-4 mt-8">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center my-4 gap-2">
         <h1 className="text-xl sm:text-2xl font-bold sm:mb-0 sm:mr-4">
-          {selectedCourse.name}{" "}
+          {selectedCourse.name}
         </h1>
         <h1 className="text-xl sm:text-2xl font-bold">
           ${selectedCourse.price}
@@ -74,8 +84,9 @@ const Course = () => {
           isCelebrating ? "animate-pulse" : ""
         }`}
         onClick={handleButtonClick}
+        disabled={isPurchased}
       >
-        {isClicked ? "Purchased!" : "Buy Now!"}
+        {isPurchased ? "Added to Cart!" : "Add to Cart!"}
       </button>
     </div>
   );
