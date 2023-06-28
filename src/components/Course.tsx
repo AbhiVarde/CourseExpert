@@ -75,7 +75,7 @@ const Course = () => {
         }`}
         onClick={handleButtonClick}
       >
-        ${isClicked ? "Purchased!" : "Buy Now!"}
+        {isClicked ? "Purchased!" : "Buy Now!"}
       </button>
     </div>
   );
