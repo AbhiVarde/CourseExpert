@@ -1,10 +1,16 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectCourses } from "../features/CoursesSlice";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import confetti from "canvas-confetti";
 
 const Cart = ({ setPurchasedCourses, setCartCount }: any) => {
-  const courses = useSelector(selectCourses);
+  const [isCelebrating, setIsCelebrating] = useState(false);
+  const navigate = useNavigate();
 
+  const courses = useSelector(selectCourses);
   const cartCourses = courses.filter((course: any) => course.isPurchased);
 
   const getTotalAmount = () => {
@@ -18,6 +24,30 @@ const Cart = ({ setPurchasedCourses, setCartCount }: any) => {
   const handleBuyNow = () => {
     setPurchasedCourses(cartCourses);
     setCartCount(0);
+
+    navigate("/");
+
+    toast.success("Course bought! Start learning now! 🌟🎉", {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
+    if (!isCelebrating) {
+      setIsCelebrating(true);
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+      });
+      setTimeout(() => {
+        setIsCelebrating(false);
+      }, 3000);
+    }
   };
 
   return (

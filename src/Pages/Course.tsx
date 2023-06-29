@@ -1,8 +1,6 @@
-import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { selectCourses, updateCourse } from "../features/CoursesSlice";
-import confetti from "canvas-confetti";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -11,7 +9,7 @@ const Course = ({ onButtonClicked }: any) => {
   const courses = useSelector(selectCourses);
   const dispatch = useDispatch();
 
-  const [isCelebrating, setIsCelebrating] = useState(false);
+  // const [isCelebrating, setIsCelebrating] = useState(false);
 
   const selectedCourse = courses.find((course) => course.id === id);
 
@@ -23,7 +21,7 @@ const Course = ({ onButtonClicked }: any) => {
 
   const handleButtonClick = () => {
     if (!isPurchased) {
-      toast.success("Course bought! Start learning now! 🌟🎉 ", {
+      toast.success("Course Secured! Get ready to start learning! 🌟🎉", {
         position: "top-center",
         autoClose: 2000,
         hideProgressBar: true,
@@ -33,17 +31,17 @@ const Course = ({ onButtonClicked }: any) => {
         progress: undefined,
       });
 
-      if (!isCelebrating) {
-        setIsCelebrating(true);
-        confetti({
-          particleCount: 100,
-          spread: 70,
-          origin: { y: 0.6 },
-        });
-        setTimeout(() => {
-          setIsCelebrating(false);
-        }, 3000);
-      }
+      // if (!isCelebrating) {
+      //   setIsCelebrating(true);
+      //   confetti({
+      //     particleCount: 100,
+      //     spread: 70,
+      //     origin: { y: 0.6 },
+      //   });
+      //   setTimeout(() => {
+      //     setIsCelebrating(false);
+      //   }, 3000);
+      // }
 
       if (onButtonClicked) {
         onButtonClicked();
@@ -54,7 +52,7 @@ const Course = ({ onButtonClicked }: any) => {
         updateCourse({ id: selectedCourse.id, changes: { isPurchased: true } })
       );
     } else {
-      toast.info("Course already purchased! Happy learning! 🌟📚", {
+      toast.info("Course already added! Happy learning!🌟📚", {
         position: "top-center",
         autoClose: 2000,
         hideProgressBar: true,
@@ -80,9 +78,7 @@ const Course = ({ onButtonClicked }: any) => {
       <p className="text-gray-600">Description: {selectedCourse.description}</p>
       <h4 className="text-gray-600">Rating: {selectedCourse.rating}</h4>
       <button
-        className={`bg-gray-800 hover:bg-gray-900 text-white py-2 px-4 rounded mt-4 ${
-          isCelebrating ? "animate-pulse" : ""
-        }`}
+        className={`bg-gray-800 hover:bg-gray-900 text-white py-2 px-4 rounded mt-4 `}
         onClick={handleButtonClick}
         disabled={isPurchased}
       >
