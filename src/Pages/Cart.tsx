@@ -5,27 +5,27 @@ import { selectCourses } from "../features/CoursesSlice";
 const Cart = ({ setPurchasedCourses, setCartCount }: any) => {
   const courses = useSelector(selectCourses);
 
-  const remainingCourses = courses.filter((course: any) => !course.isPurchased);
+  const cartCourses = courses.filter((course: any) => course.isPurchased);
 
   const getTotalAmount = () => {
     let total = 0;
-    remainingCourses.forEach((course: any) => {
+    cartCourses.forEach((course: any) => {
       total += course.price;
     });
     return total;
   };
 
   const handleBuyNow = () => {
-    setPurchasedCourses(remainingCourses);
+    setPurchasedCourses(cartCourses);
     setCartCount(0);
   };
 
   return (
     <div className="container mx-auto px-4 mt-8">
       <h2 className="text-2xl font-bold mb-4">Cart</h2>
-      {remainingCourses.length > 0 ? (
+      {cartCourses.length > 0 ? (
         <>
-          {remainingCourses.map((course: any) => (
+          {cartCourses.map((course: any) => (
             <div key={course.id} className="mb-4">
               <p>{course.name}</p>
               <p>${course.price}</p>
