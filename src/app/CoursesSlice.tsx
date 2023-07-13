@@ -13,7 +13,7 @@ interface Course {
 
 interface CoursesState {
   courses: Course[];
-  cart: string[]; // Array of course IDs in the cart
+  cart: string[];
 }
 
 const initialState: CoursesState = {

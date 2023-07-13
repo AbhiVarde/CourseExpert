@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectCourses } from "../features/CoursesSlice";
+import { selectCourses } from "../app/CoursesSlice";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import confetti from "canvas-confetti";

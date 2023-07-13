@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { setCourses } from "../features/CoursesSlice";
+import { setCourses } from "../app/CoursesSlice";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";

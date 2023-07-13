@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { selectCourses, updateCourse } from "../features/CoursesSlice";
+import { selectCourses, updateCourse } from "../app/CoursesSlice";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

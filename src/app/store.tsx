@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import { useDispatch } from "react-redux";
-import coursesReducer from "../features/CoursesSlice";
+import coursesReducer from "./CoursesSlice";
 
 const rootReducer = combineReducers({
   courses: coursesReducer,

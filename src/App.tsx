@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { selectCourses } from "./features/CoursesSlice";
+import { selectCourses } from "./app/CoursesSlice";
 import { Routes, Route, useNavigate, Link } from "react-router-dom";
 import AddCourse from "./Pages/AddCourse";
 import Course from "./Pages/Course";
