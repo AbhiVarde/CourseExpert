@@ -150,7 +150,7 @@ function App() {
 
       <footer className="fixed bottom-0 right-0 left-0 bg-gray-900 text-white py-4 text-center">
         Made with <AiTwotoneHeart className="inline-block text-green-500" /> by{" "}
-        <a href="https://abhivarde.vercel.app" className="font-semibold">
+        <a href="https://www.abhivarde.in/" className="font-semibold">
           AbhiVarde
         </a>
       </footer>
